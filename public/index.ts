@@ -6,7 +6,7 @@ import img789bet from "./images/789bet.png";
 import img789betmobile from "./images/789BET_1.png";
 import new88mobile from "./images/NEW88_1.png";
 import jun88mobile from "./images/Jun88_1.png";
-import hi88mobile from "./images/HI88_1.png";
+import hi88mobile from "./images/Jun88_1.png";
 import mb66mobile from "./images/mb66_1.png";
 export {
 	new88,
