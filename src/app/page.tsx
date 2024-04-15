@@ -15,7 +15,7 @@ import ListRank from "@/components/rank/ListRank";
 import useHotNewsQuery from "@/hooks/useHotNewsQuery";
 import useNewsQuery from "@/hooks/useNewsQuery";
 import {dehydrate, HydrationBoundary, QueryClient} from "@tanstack/react-query";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import Image from "next/image";
 
 const HomePage = async ({
