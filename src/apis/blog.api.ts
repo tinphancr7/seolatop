@@ -44,7 +44,7 @@ export const fetchAllBlogs = async ({
 	pageIndex: number;
 	pageSize: number;
 	search: string;
-	type?: string;
+	type: string;
 }) => {
 	await new Promise((resolve) => setTimeout(resolve, 1000));
 

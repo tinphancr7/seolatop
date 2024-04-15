@@ -1,10 +1,10 @@
 import Heading from "@/components/heading/Heading";
 import ListPartner from "./components/ListPartner";
 import ListCard from "../../components/card/ListCard";
-import {HydrationBoundary, QueryClient, dehydrate} from "@tanstack/react-query";
-import useProjectsQuery from "@/hooks/useProjectsQuery";
-import useHotProjectsQuery from "@/hooks/useHotProjectsQuery";
 import HotProject from "./components/HotProject";
+
+import {fetchAllProjects, fetchHotProjects} from "@/apis/project.api";
+import {HydrationBoundary, QueryClient, dehydrate} from "@tanstack/react-query";
 const Project = async ({
 	searchParams,
 }: {
@@ -14,24 +14,28 @@ const Project = async ({
 		search: string;
 	};
 }) => {
-	const pageIndex = Number(searchParams?.pageIndex) || 1;
-	const pageSize = Number(searchParams?.pageSize) || 10;
+	const pageIndex = searchParams?.pageIndex || 1;
+	const pageSize = searchParams?.pageSize || 10;
 	const search = searchParams?.search || "";
 	const queryClient = new QueryClient();
-	await queryClient.prefetchQuery(
-		useHotProjectsQuery({
-			pageIndex: 1,
-			pageSize: 10,
-			search: "",
-		})
-	);
-	await queryClient.prefetchQuery(
-		useProjectsQuery({
-			pageIndex,
-			pageSize,
-			search,
-		})
-	);
+	await queryClient.prefetchQuery({
+		queryKey: ["hot-projects"],
+		queryFn: () =>
+			fetchHotProjects({
+				pageIndex: 1,
+				pageSize: 10,
+				search: "",
+			}),
+	});
+	await queryClient.prefetchQuery({
+		queryKey: ["seo-projects", pageIndex, pageSize, search],
+		queryFn: () =>
+			fetchAllProjects({
+				pageIndex: pageIndex,
+				pageSize: pageSize,
+				search: search,
+			}),
+	});
 	return (
 		<div className="">
 			<HydrationBoundary state={dehydrate(queryClient)}>
@@ -43,7 +47,6 @@ const Project = async ({
 					<div className="lg:my-[60px] my-4 lg:px-[100px]  w-full ">
 						<ListPartner />
 					</div>
-
 					<HydrationBoundary state={dehydrate(queryClient)}>
 						<ListCard
 							kind="project"

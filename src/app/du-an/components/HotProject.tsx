@@ -1,23 +1,22 @@
 "use client";
-
+import {fetchHotProjects} from "@/apis/project.api";
 import Heading from "@/components/heading/Heading";
 import SwiperCard from "@/components/swiper-card/SwiperCard";
-import useHotProjectsQuery from "@/hooks/useHotProjectsQuery";
 import {useQuery} from "@tanstack/react-query";
 import Image from "next/image";
 import React, {useState} from "react";
 
 const HotProject = () => {
-	const {data} = useQuery(
-		useHotProjectsQuery({
-			pageIndex: 1,
-			pageSize: 10,
-			search: "",
-		})
-	);
-
+	const {data} = useQuery({
+		queryKey: ["hot-projects"],
+		queryFn: () =>
+			fetchHotProjects({
+				pageIndex: 1,
+				pageSize: 10,
+				search: "",
+			}),
+	});
 	const hotProjectsData = data?.result?.result;
-
 	const [chosenItem, setChosenItem] = useState(null);
 
 	const handleChosenItem = (item: any) => {

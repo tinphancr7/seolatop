@@ -1,6 +1,5 @@
 "use client";
-// import Card from "@/components/card/Card";
-const Card = dynamic(() => import("@/components/card/Card"));
+import Card from "@/components/card/Card";
 
 import React, {Fragment, useEffect, useState} from "react";
 // Import Swiper React components
@@ -10,12 +9,12 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import {Pagination} from "swiper/modules";
-import dynamic from "next/dynamic";
 interface ListRankProps {
 	name: string;
 	order: number;
 }
 const ListRank = ({name, order}: ListRankProps) => {
+	console.log("name", name);
 	const [orderActive, setOrderActive] = useState(0);
 	useEffect(() => {
 		if (name === "master") {

@@ -18,7 +18,7 @@ const ProjectDetail = ({slug}) => {
 	return (
 		<div className="">
 			<div className="relative show_bg_2">
-				<Heading>dự án</Heading>
+				<Heading>BLOG</Heading>
 				<div className="hidden lg:block">
 					<SwiperCardDetail images={projectDetail?.images} />
 				</div>
@@ -69,7 +69,7 @@ const ProjectDetail = ({slug}) => {
 					</div>
 				</div>
 				<div className="lg:flex items-center justify-center mt-10 hidden">
-					<Link href={"/du-an"} className="relative w-[560px]  h-[87px]">
+					<Link href={"/blog"} className="relative w-[560px]  h-[87px]">
 						<Image
 							src={"/images/layer.png"}
 							fill
@@ -78,7 +78,7 @@ const ProjectDetail = ({slug}) => {
 						/>
 						<div className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] flex items-center gap-2">
 							<span className="text-2xl font-normal text-white">
-								Trở về danh sách dự án
+								Trở về danh sách Blog
 							</span>
 						</div>
 					</Link>

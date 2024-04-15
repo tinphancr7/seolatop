@@ -1,22 +1,23 @@
-import {fetchAllActivities} from "@/apis/activity.api";
+import { fetchAllActivities } from "@/apis/activity.api";
 
 const useActivitiesQuery = ({
-	pageIndex,
-	pageSize,
-	search,
+  pageIndex,
+  pageSize,
+  search,
 }: {
-	pageIndex: number;
-	pageSize: number;
-	search?: string;
+  pageIndex: number;
+  pageSize: number;
+  search: string;
+  props?: any;
 }) => {
-	const queryKey = ["activities", pageIndex, pageSize, search];
-	const queryFn = () =>
-		fetchAllActivities({
-			pageIndex,
-			pageSize,
-			search,
-		});
-	return {queryKey, queryFn};
+  const queryKey = ["activities", pageIndex, pageSize, search];
+  const queryFn = () =>
+    fetchAllActivities({
+      pageIndex,
+      pageSize,
+      search,
+    });
+  return { queryKey, queryFn };
 };
 
 export default useActivitiesQuery;

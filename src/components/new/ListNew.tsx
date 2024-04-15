@@ -1,28 +1,28 @@
 "use client";
+import newApi from "@/apis/new.api";
 import {Spinner} from "@nextui-org/react";
 import {keepPreviousData, useQuery} from "@tanstack/react-query";
-// import NewItem from "./NewItem";
-const NewItem = dynamic(() => import("./NewItem"));
-// import PaginationComp from "../pagination/PaginationComp";
-const PaginationComp = dynamic(() => import("../pagination/PaginationComp"));
-import useNewsQuery from "@/hooks/useNewsQuery";
-import {useRouter} from "next/navigation";
-import dynamic from "next/dynamic";
+import React, {useState} from "react";
+import NewItem from "./NewItem";
+import PaginationComp from "../pagination/PaginationComp";
 
-const ListNew = ({pageIndex, pageSize, search}: any) => {
-	const router = useRouter();
+const ListNew = () => {
+	const [page, setPage] = useState(1);
+	const [pageSize, _] = useState(4);
 	const {data, isLoading} = useQuery({
-		...useNewsQuery({
-			pageIndex,
-			pageSize,
-			search,
-		}),
+		queryKey: ["news", page],
+		queryFn: () =>
+			newApi.getAllNews({
+				pageIndex: page,
+				pageSize,
+				search: "",
+			}),
 		placeholderData: keepPreviousData,
 	});
-	const newsData = data?.result;
-
-	const handleChangePage = (pageIndex: number) => {
-		router.push(`/?pageIndex=${pageIndex}&pageSize=${pageSize}`);
+	const newsData = data?.data?.result;
+	console.log("news", newsData);
+	const handleChangePage = (page: number) => {
+		setPage(page);
 	};
 	return (
 		<div>
@@ -32,26 +32,17 @@ const ListNew = ({pageIndex, pageSize, search}: any) => {
 				</div>
 			) : (
 				<>
-					{newsData?.result?.length > 0 ? (
-						<>
-							<div className="grid grid-cols-12 gap-2 lg:gap-10">
-								{newsData?.result?.map((item: any, index: number) => (
-									<NewItem key={index} item={item} />
-								))}
-							</div>
-							<div className="flex items-center justify-center w-full mt-6">
-								<PaginationComp
-									pageIndex={pageIndex}
-									totalPage={newsData?.totalPage}
-									onChangePage={handleChangePage}
-								/>
-							</div>
-						</>
-					) : (
-						<div className="text-center font-semibold text-xl">
-							Dữ liệu đang được cập nhật...
-						</div>
-					)}
+					<div className="grid grid-cols-12 gap-2 lg:gap-10">
+						{newsData?.result?.map((item: any, index: number) => (
+							<NewItem key={index} item={item} />
+						))}
+					</div>
+					<div className="flex items-center justify-center w-full mt-6">
+						<PaginationComp
+							totalPage={newsData?.totalPage}
+							onChangePage={handleChangePage}
+						/>
+					</div>
 				</>
 			)}
 		</div>

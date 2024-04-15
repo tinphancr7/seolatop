@@ -1,9 +1,9 @@
 import http from "@/utils/http";
 
 const ProjectApi = {
-	// getAllHotProjects: () => {
-	// 	return http.get("/projects/hot");
-	// },
+	getAllHotProjects: () => {
+		return http.get("/projects/hot");
+	},
 	getAllProjects: ({
 		pageIndex,
 		pageSize,
@@ -25,7 +25,16 @@ const ProjectApi = {
 		return http.get(`/projects/${slug}`);
 	},
 };
+export const fetchAllHotProjects = async () => {
+	await new Promise((resolve) => setTimeout(resolve, 1000));
 
+	const res = await fetch("http://localhost:7022/api/v1/projects/hot", {
+		cache: "no-store",
+	});
+	const data = await res.json();
+
+	return data;
+};
 export const fetchAllProjects = async ({
 	pageIndex,
 	pageSize,
@@ -33,7 +42,7 @@ export const fetchAllProjects = async ({
 }: {
 	pageIndex: number;
 	pageSize: number;
-	search?: string;
+	search: string;
 }) => {
 	await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -47,14 +56,14 @@ export const fetchAllProjects = async ({
 
 	return data;
 };
-export const fetchAllHotProjects = async ({
+export const fetchHotProjects = async ({
 	pageIndex,
 	pageSize,
 	search,
 }: {
 	pageIndex: number;
 	pageSize: number;
-	search?: string;
+	search: string;
 }) => {
 	await new Promise((resolve) => setTimeout(resolve, 1000));
 

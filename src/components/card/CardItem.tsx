@@ -23,10 +23,10 @@ const CardItem = ({item, kind}) => {
 					{item?.title}
 				</h4>
 				{kind === "project" ? (
-					<div
+					<p
 						className="text-base lg:text-xl text-gray7E lg:text-white font-normal line-clamp-2"
 						dangerouslySetInnerHTML={{__html: item?.description}}
-					/>
+					></p>
 				) : (
 					<span className="text-base lg:text-xl font-normal text-gray7E">
 						{moment(item?.createdAt).format("DD/MM/YYYY")}
