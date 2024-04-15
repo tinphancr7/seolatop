@@ -96,9 +96,9 @@ const HomePage = async ({
 						>
 							TIN TỨC NỔI BẬT
 						</Heading2>
-						<HydrationBoundary state={dehydrate(queryClient)}>
+						{/* <HydrationBoundary state={dehydrate(queryClient)}>
 							<HotNew pageIndex={1} pageSize={5} search="" />
-						</HydrationBoundary>
+						</HydrationBoundary> */}
 					</div>
 					<div className="pb-10 lg:pb-20">
 						<Heading2
@@ -108,13 +108,13 @@ const HomePage = async ({
 						>
 							Các tin tức khác
 						</Heading2>
-						<HydrationBoundary state={dehydrate(queryClient)}>
+						{/* <HydrationBoundary state={dehydrate(queryClient)}>
 							<ListNew
 								pageIndex={pageIndex}
 								pageSize={pageSize}
 								search={search}
 							/>
-						</HydrationBoundary>
+						</HydrationBoundary> */}
 					</div>
 					<div className="">
 						<Heading>CÁC ĐƠN VỊ ĐỐI TÁC</Heading>
