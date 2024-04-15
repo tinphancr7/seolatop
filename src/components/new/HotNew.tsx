@@ -16,7 +16,7 @@ const HotNew = ({pageIndex, pageSize, search}: any) => {
 		})
 	);
 
-	const [itemData, ...restData] = data?.result?.result;
+	const [itemData, ...restData] = data?.result?.result || [];
 
 	return (
 		<div className="grid grid-cols-12 gap-5">

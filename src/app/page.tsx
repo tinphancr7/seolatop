@@ -108,13 +108,13 @@ const HomePage = async ({
 						>
 							Các tin tức khác
 						</Heading2>
-						{/* <HydrationBoundary state={dehydrate(queryClient)}>
+						<HydrationBoundary state={dehydrate(queryClient)}>
 							<ListNew
 								pageIndex={pageIndex}
 								pageSize={pageSize}
 								search={search}
 							/>
-						</HydrationBoundary> */}
+						</HydrationBoundary>
 					</div>
 					<div className="">
 						<Heading>CÁC ĐƠN VỊ ĐỐI TÁC</Heading>
