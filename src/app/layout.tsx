@@ -2,10 +2,12 @@ import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
+// import Footer from "@/components/footer/Footer";
+const Footer = dynamic(() => import("@/components/footer/Footer"));
 
 import MenuMobile from "@/components/menuMobile/MenuMobile";
 import Providers from "@/utils/providers";
+import dynamic from "next/dynamic";
 
 const inter = Inter({subsets: ["latin"]});
 

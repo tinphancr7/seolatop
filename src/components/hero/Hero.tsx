@@ -1,5 +1,6 @@
 import Card from "@/components/card/Card";
-import Heading from "@/components/heading/Heading";
+// const Card = dynamic(() => import("@/components/card/Card"));
+import dynamic from "next/dynamic";
 import React from "react";
 
 const Hero = () => {

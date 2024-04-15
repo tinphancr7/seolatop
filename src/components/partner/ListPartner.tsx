@@ -8,10 +8,9 @@ const ListPartner = () => {
 				<div key={index} className="col-span-4 lg:col-span-2 ">
 					<div className="w-full h-[42px] lg:h-[96px] relative">
 						<Image
-							src={`/images/${item?.url}`}
-							className="object-contain"
-							fill
-							alt={item.name || ""}
+							src={item?.url}
+							className="object-cover"
+							alt={item?.name || ""}
 						/>
 					</div>
 				</div>

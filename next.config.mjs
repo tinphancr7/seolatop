@@ -8,7 +8,7 @@ const nextConfig = {
 				port: "",
 			},
 			{
-				hostname: "109.123.229.78",
+				hostname: "103.186.24.231",
 				port: "9000",
 			},
 			{

@@ -1,40 +1,93 @@
 "use client";
-import ModalActivity from "@/app/hoat-dong/components/Modal";
+
 import PaginationComp from "@/components/pagination/PaginationComp";
-import React, {useState} from "react";
-import CardItemModal from "./CardItemModal";
-import {useDisclosure} from "@nextui-org/react";
+
 import CardItem from "./CardItem";
+import {keepPreviousData, useQuery} from "@tanstack/react-query";
+import {useRouter} from "next/navigation";
+
+import useBlogsQuery from "@/hooks/useBlogsQuery";
+import {Spinner} from "@nextui-org/react";
+import useProjectsQuery from "@/hooks/useProjectsQuery";
 
 interface ListCardProps {
-	kind?: string;
+	kind: string;
+	pageIndex: number;
+	pageSize: number;
+	search: string;
+	type?: string;
 }
 
-const ListCard = ({kind}: ListCardProps) => {
-	const [page, setPage] = useState(1);
-	const [pageSize, _] = useState(4);
-	const handleChangePage = (page: number) => {
-		setPage(page);
+const ListCard = ({kind, pageIndex, pageSize, search, type}: ListCardProps) => {
+	const router = useRouter();
+	const {data, isLoading: isLoadingBlog} = useQuery({
+		...useBlogsQuery({
+			pageIndex,
+			pageSize,
+			search,
+			type,
+		}),
+		enabled: kind === "blog",
+
+		placeholderData: keepPreviousData,
+	});
+	const blogsData = data?.result;
+
+	const {data: seoProjects} = useQuery({
+		...useProjectsQuery({
+			pageIndex,
+			pageSize,
+			search,
+		}),
+		enabled: kind === "project",
+		placeholderData: keepPreviousData,
+	});
+	const seoProjectsData = seoProjects?.result;
+
+	const handleChangePage = (pageIndex: string) => {
+		const link =
+			kind === "project"
+				? `/project?pageIndex=${pageIndex}&pageSize=${pageSize}${
+						search ? `&search=${search}` : ""
+				  }`
+				: `/blog?pageIndex=${pageIndex}&pageSize=${pageSize}${
+						search ? `&search=${search}` : ""
+				  }&type=${type}`;
+		return router.push(link);
 	};
-	const {isOpen, onOpen, onClose} = useDisclosure();
+	let resultData = kind === "project" ? seoProjectsData : blogsData;
+
 	return (
-		<div>
-			<div className="grid grid-cols-12 gap-4 lg:gap-10 ">
-				{new Array(12).fill(0).map((_, index) => (
-					<>
-						{kind === "activity" ? (
-							<CardItemModal key={index} onOpen={onOpen} />
-						) : (
-							<CardItem kind={kind} key={index} />
-						)}
-					</>
-				))}
-			</div>
-			<div className="flex items-center justify-center w-full pt-10">
-				<PaginationComp totalPage={10} onChangePage={handleChangePage} />
-			</div>
-			<ModalActivity isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-		</div>
+		<>
+			{isLoadingBlog ? (
+				<div className="flex items-center justify-center">
+					<Spinner label="Loading..." color="primary" />
+				</div>
+			) : (
+				<div>
+					{resultData?.result?.length > 0 ? (
+						<>
+							<div className="grid grid-cols-12 gap-4 lg:gap-10 ">
+								{resultData?.result?.map((item, index) => (
+									<CardItem kind={kind} key={index} item={item} />
+								))}
+							</div>
+							<div className="flex items-center justify-center w-full pt-10">
+								<PaginationComp
+									pageIndex={pageIndex}
+									totalPage={resultData?.totalPage}
+									onChangePage={handleChangePage}
+								/>
+							</div>
+						</>
+					) : (
+						<div className="text-center font-semibold text-xl">
+							Dữ liệu đang được cập nhật...
+						</div>
+					)}
+				</div>
+			)}
+		</>
 	);
 };
 

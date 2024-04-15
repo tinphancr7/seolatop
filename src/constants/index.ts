@@ -12,6 +12,7 @@ import {
 	mb66mobile,
 	new88,
 	new88mobile,
+	okvip,
 } from "../../public";
 
 const listMenuHeader = [
@@ -48,16 +49,19 @@ const listMenuHeader = [
 ];
 const listMenuBlog = [
 	{
-		id: 1,
+		id: 0,
 		name: "Kinh nghiệm",
+		type: "experience",
+	},
+	{
+		id: 1,
+		name: "Công cụ",
+		type: "tool",
 	},
 	{
 		id: 2,
-		name: "Công cụ",
-	},
-	{
-		id: 3,
 		name: "Đời sống",
+		type: "life",
 	},
 ];
 
@@ -135,6 +139,7 @@ const rankLogo: RankLogo = {
 };
 
 const listPartners = [
+	{name: "okvip", url: okvip},
 	{name: "789bet", url: img789bet},
 	{name: "jun88", url: jun88},
 	{name: "mb66", url: mb66},
@@ -188,7 +193,7 @@ const listContacts = [
 		Icon: IoLocationSharp,
 	},
 ];
-const URL_IMAGE = "http://109.123.229.78:9000/kaizen";
+const URL_IMAGE = "http://103.186.24.231:9000/newkaizen";
 export {
 	listMenuHeader,
 	rankLogo,

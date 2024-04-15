@@ -1,8 +1,20 @@
+"use client";
 import {listMenuBlog} from "@/constants";
-
 import {Tabs, Tab} from "@nextui-org/react";
+import {useRouter} from "next/navigation";
+import {useEffect, useRef, useState} from "react";
 
-const TabBlog = () => {
+const TabBlog = ({kind, type}: any) => {
+	const [tab, setTab] = useState(type);
+	const [initialRender, setInitialRender] = useState(true);
+	const router = useRouter();
+	useEffect(() => {
+		if (initialRender) {
+			setInitialRender(false);
+		} else {
+			router.push(`/${kind}?type=${tab}`);
+		}
+	}, [kind, router, tab]);
 	return (
 		<div className="flex w-full items-center justify-center">
 			<Tabs
@@ -15,6 +27,9 @@ const TabBlog = () => {
 					tab: "max-w-fit px-0  h-12",
 					tabContent:
 						"group-data-[selected=true]:text-green32 text-base lg:text-4xl font-bold ",
+				}}
+				onSelectionChange={(selectedIndex) => {
+					setTab(listMenuBlog[selectedIndex]?.type);
 				}}
 			>
 				{listMenuBlog.map((item, index) => (

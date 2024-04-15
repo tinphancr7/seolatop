@@ -1,13 +1,41 @@
 import Heading from "@/components/heading/Heading";
+// const Heading = dynamic(() => import("@/components/heading/Heading"));
 import Heading2 from "@/components/heading/Heading2";
+// const Heading2 = dynamic(() => import("@/components/heading/Heading2"));
 import Hero from "@/components/hero/Hero";
+// const Hero = dynamic(() => import("@/components/hero/Hero"));
 import HotNew from "@/components/new/HotNew";
+// const HotNew = dynamic(() => import("@/components/new/HotNew"));
 import ListNew from "@/components/new/ListNew";
+// const ListNew = dynamic(() => import("@/components/new/ListNew"));
 import ListPartner from "@/components/partner/ListPartner";
+// const ListPartner = dynamic(() => import("@/components/partner/ListPartner"));
 import ListRank from "@/components/rank/ListRank";
+// const ListRank = dynamic(() => import("@/components/rank/ListRank"));
+import useHotNewsQuery from "@/hooks/useHotNewsQuery";
+import useNewsQuery from "@/hooks/useNewsQuery";
+import {dehydrate, HydrationBoundary, QueryClient} from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 
-export default function Home() {
+const HomePage = async ({
+	searchParams,
+}: {
+	searchParams: {
+		pageIndex: number;
+		pageSize: number;
+		search: string;
+	};
+}) => {
+	const pageIndex = Number(searchParams?.pageIndex) || 1;
+	const pageSize = Number(searchParams?.pageSize) || 3;
+	const search = searchParams?.search || "";
+
+	const queryClient = new QueryClient();
+	await queryClient.prefetchQuery(useNewsQuery({pageIndex, pageSize, search}));
+	await queryClient.prefetchQuery(
+		useHotNewsQuery({pageIndex: 1, pageSize: 5, search: ""})
+	);
 	return (
 		<main className=" w-full overflow-hidden relative ">
 			<div className="show_bg_2 relative">
@@ -68,7 +96,9 @@ export default function Home() {
 						>
 							TIN TỨC NỔI BẬT
 						</Heading2>
-						<HotNew />
+						<HydrationBoundary state={dehydrate(queryClient)}>
+							<HotNew pageIndex={1} pageSize={5} search="" />
+						</HydrationBoundary>
 					</div>
 					<div className="pb-10 lg:pb-20">
 						<Heading2
@@ -78,7 +108,13 @@ export default function Home() {
 						>
 							Các tin tức khác
 						</Heading2>
-						<ListNew />
+						<HydrationBoundary state={dehydrate(queryClient)}>
+							<ListNew
+								pageIndex={pageIndex}
+								pageSize={pageSize}
+								search={search}
+							/>
+						</HydrationBoundary>
 					</div>
 					<div className="">
 						<Heading>CÁC ĐƠN VỊ ĐỐI TÁC</Heading>
@@ -88,4 +124,5 @@ export default function Home() {
 			</div>
 		</main>
 	);
-}
+};
+export default HomePage;

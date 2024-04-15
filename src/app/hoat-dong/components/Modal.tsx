@@ -1,22 +1,32 @@
 "use client";
-import React from "react";
+import React, {useEffect} from "react";
 import {Modal, ModalContent, ModalBody} from "@nextui-org/react";
 import Image from "next/image";
+import {URL_IMAGE} from "@/constants";
 
 const ModalActivity = ({
 	isOpen,
-	onOpen,
 	onClose,
+	images,
 }: {
 	isOpen: boolean;
-	onOpen: () => void;
+
 	onClose: () => void;
+	images: any;
 }) => {
+	const [index, setIndex] = React.useState(0);
+	useEffect(() => {
+		if (isOpen) {
+			setIndex(0);
+		}
+	}, [isOpen]);
+
 	return (
 		<>
 			<Modal
 				backdrop={"blur"}
 				isOpen={isOpen}
+				isDismissable={false}
 				onClose={onClose}
 				placement="center"
 				classNames={{
@@ -32,7 +42,7 @@ const ModalActivity = ({
 							<ModalBody>
 								<div className="w-full h-full relative ">
 									<Image
-										src="https://images.unsplash.com/photo-1711539924834-06816347ff2a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D"
+										src={`${URL_IMAGE}/${images[index]}`}
 										alt="mb66"
 										fill
 										className="object-cover rounded-[20px]"
@@ -43,7 +53,16 @@ const ModalActivity = ({
 					)}
 				</ModalContent>
 
-				<div className="absolute left-10 top-[50%]  -translate-y-[50%] cursor-pointer z-[10000000] w-[10px] h-[21px] lg:w-[28px] lg:h-[56px] before:content-[''] before:absolute before:top-[50%] before:left-[50%] before:-translate-x-[50%] before:-translate-y-[50%] before:w-12 before:h-12 before:bg-black/30 before:rounded-full">
+				<div
+					className="absolute left-10 top-[50%]  -translate-y-[50%] cursor-pointer z-[10000000] w-[10px] h-[21px] lg:w-[28px] lg:h-[56px] before:content-[''] before:absolute before:top-[50%] before:left-[50%] before:-translate-x-[50%] before:-translate-y-[50%] before:w-12 before:h-12 before:bg-black/30 before:rounded-full"
+					onClick={() => {
+						if (index === 0) {
+							setIndex(images.length - 1);
+						} else {
+							setIndex(index - 1);
+						}
+					}}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="100%"
@@ -55,7 +74,16 @@ const ModalActivity = ({
 					</svg>
 				</div>
 
-				<div className="absolute right-10 top-[50%]  -translate-y-[50%] cursor-pointer z-[10000000] w-[10px] h-[21px] lg:w-[28px] lg:h-[56px] before:content-[''] before:absolute before:top-[50%] before:left-[50%] before:-translate-x-[50%] before:-translate-y-[50%] before:w-12 before:h-12 before:bg-black/30 before:rounded-full">
+				<div
+					className="absolute right-10 top-[50%]  -translate-y-[50%] cursor-pointer z-[10000000] w-[10px] h-[21px] lg:w-[28px] lg:h-[56px] before:content-[''] before:absolute before:top-[50%] before:left-[50%] before:-translate-x-[50%] before:-translate-y-[50%] before:w-12 before:h-12 before:bg-black/30 before:rounded-full"
+					onClick={() => {
+						if (index === images.length - 1) {
+							setIndex(0);
+						} else {
+							setIndex(index + 1);
+						}
+					}}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="100%"

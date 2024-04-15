@@ -1,5 +1,5 @@
 "use client";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useRef, useState} from "react";
 // Import Swiper React components
 import {Swiper, SwiperSlide} from "swiper/react";
 
@@ -12,7 +12,7 @@ import "swiper/css/pagination";
 import {EffectCoverflow, Pagination} from "swiper/modules";
 import Image from "next/image";
 import {URL_IMAGE} from "@/constants";
-const SwiperCard = ({items, onChosenItem}: any) => {
+const SwiperCardDetail = ({images}) => {
 	const sliderRef = useRef<any>(null);
 	const handlePrev = useCallback(() => {
 		if (!sliderRef.current) return;
@@ -22,13 +22,6 @@ const SwiperCard = ({items, onChosenItem}: any) => {
 	const handleNext = useCallback(() => {
 		if (!sliderRef.current) return;
 		sliderRef.current.swiper.slideNext();
-	}, []);
-
-	useEffect(() => {
-		const swiperInstance = sliderRef.current.swiper;
-		swiperInstance.on("slideChange", () => {
-			items?.length && onChosenItem(items[swiperInstance.realIndex]);
-		});
 	}, []);
 	return (
 		<div className="relative">
@@ -58,13 +51,13 @@ const SwiperCard = ({items, onChosenItem}: any) => {
 					// roundLengths={true}
 					navigation={false}
 				>
-					{items?.map((item, index) => (
+					{images?.map((img, index) => (
 						<SwiperSlide key={index}>
 							<div
 								className={`relative match-list-card  rounded-[20px] border-2 border-green32 mb-2 shadow-card`}
 							>
 								<Image
-									src={`${URL_IMAGE}/${item.images[0]}`}
+									src={`${URL_IMAGE}/${img}`}
 									fill
 									alt=""
 									className="object-cover rounded-[20px]"
@@ -106,4 +99,4 @@ const SwiperCard = ({items, onChosenItem}: any) => {
 	);
 };
 
-export default SwiperCard;
+export default SwiperCardDetail;
