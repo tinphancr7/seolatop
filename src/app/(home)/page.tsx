@@ -20,16 +20,18 @@ import {fetchSeoByLink} from "@/apis/seo.api";
 import {pathData} from "@/constants";
 import {getMetaData} from "@/utils";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const data = await fetchSeoByLink({
-		link: pathData.home,
-	});
+export async function generateMetadata() {
+	try {
+		const data = await fetchSeoByLink({
+			link: pathData.home,
+		});
 
-	const result = getMetaData(data);
-	return {
-		title: result?.title || "Trang chủ",
-		description: result?.description,
-	};
+		const result = getMetaData(data);
+		return {
+			title: result?.title || "Trang chủ",
+			description: result?.description,
+		};
+	} catch (error) {}
 }
 const HomePage = async ({
 	searchParams,

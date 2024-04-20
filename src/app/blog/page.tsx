@@ -10,16 +10,18 @@ import {Metadata} from "next";
 import {fetchSeoByLink} from "@/apis/seo.api";
 import {pathData} from "@/constants";
 import {getMetaData} from "@/utils";
-export async function generateMetadata(): Promise<Metadata> {
-	const data = await fetchSeoByLink({
-		link: pathData.contact,
-	});
+export async function generateMetadata() {
+	try {
+		const data = await fetchSeoByLink({
+			link: pathData.contact,
+		});
 
-	const result = getMetaData(data);
-	return {
-		title: result?.title || "Blog",
-		description: result?.description,
-	};
+		const result = getMetaData(data);
+		return {
+			title: result?.title || "Blog",
+			description: result?.description,
+		};
+	} catch (error) {}
 }
 
 const BlogPage = async ({

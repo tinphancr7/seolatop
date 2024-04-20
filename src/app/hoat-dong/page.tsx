@@ -5,20 +5,22 @@ import {dehydrate, HydrationBoundary, QueryClient} from "@tanstack/react-query";
 import useActivitiesQuery from "@/hooks/useActivitiesQuery";
 const ListCard = dynamic(() => import("@/app/hoat-dong/components/ListCard"));
 import dynamic from "next/dynamic";
-import {Metadata} from "next";
+
 import {getMetaData} from "@/utils";
 import {pathData} from "@/constants";
 import {fetchSeoByLink} from "@/apis/seo.api";
-export async function generateMetadata(): Promise<Metadata> {
-	const data = await fetchSeoByLink({
-		link: pathData.activity,
-	});
+export async function generateMetadata() {
+	try {
+		const data = await fetchSeoByLink({
+			link: pathData.activity,
+		});
 
-	const result = getMetaData(data);
-	return {
-		title: result?.title || "Hoạt động",
-		description: result?.description,
-	};
+		const result = getMetaData(data);
+		return {
+			title: result?.title || "Hoạt động",
+			description: result?.description,
+		};
+	} catch (error) {}
 }
 
 const ActivityPage = async ({

@@ -4,22 +4,24 @@ const Heading = dynamic(() => import("@/components/heading/Heading"));
 import Image from "next/image";
 
 type Props = {};
-import {Metadata} from "next";
+
 import dynamic from "next/dynamic";
 import {fetchSeoByLink} from "@/apis/seo.api";
 import {pathData} from "@/constants";
 import {getMetaData} from "@/utils";
 
-export async function generateMetadata(): Promise<Metadata> {
-	const data = await fetchSeoByLink({
-		link: pathData.about,
-	});
+export async function generateMetadata() {
+	try {
+		const data = await fetchSeoByLink({
+			link: pathData.about,
+		});
 
-	const result = getMetaData(data);
-	return {
-		title: result?.title || "Giới thiệu",
-		description: result?.description,
-	};
+		const result = getMetaData(data);
+		return {
+			title: result?.title || "Giới thiệu",
+			description: result?.description,
+		};
+	} catch (error) {}
 }
 const AboutPage = (props: Props) => {
 	return (
