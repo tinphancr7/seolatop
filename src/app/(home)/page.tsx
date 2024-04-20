@@ -8,9 +8,9 @@ import Image from "next/image";
 import {Metadata} from "next";
 import useSeoHistoriesQuery from "@/hooks/useSeoHistoriesQuery";
 import useRanksQuery from "@/hooks/useRanksQuery";
-const ListRankMaster = dynamic(
-	() => import("./components/rank/ListRankMaster")
-);
+// const ListRankMaster = dynamic(
+// 	() => import("./components/rank/ListRankMaster")
+// );
 const Hero = dynamic(() => import("./components/hero/Hero"));
 const ListRank = dynamic(() => import("./components/rank/ListRank"));
 const HotNew = dynamic(() => import("./components/new/HotNew"));
@@ -19,6 +19,7 @@ const ListPartner = dynamic(() => import("./components/partner/ListPartner"));
 import {fetchSeoByLink} from "@/apis/seo.api";
 import {pathData} from "@/constants";
 import {getMetaData} from "@/utils";
+import ListRankMaster from "./components/rank/ListRankMaster";
 
 export async function generateMetadata() {
 	try {
