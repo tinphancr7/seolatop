@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-import RankItem from "../rank/RankItem";
+const RankItem = dynamic(() => import("../rank/RankItem"));
 
 const Hero = () => {
 	return (
