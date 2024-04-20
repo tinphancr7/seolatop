@@ -1,36 +1,21 @@
+import {BASE_URL} from "@/constants";
 import http from "@/utils/http";
 
-const blogApi = {
-	getAllHotBlogs: () => {
-		return http.get("/blogs/hot");
-	},
-	getAllBlogs: ({
-		pageIndex,
-		pageSize,
-		search,
-	}: {
-		pageIndex: number | string;
-		pageSize: number | string;
-		search: string;
-	}) => {
-		return http.get("/blogs", {
-			params: {
-				pageIndex,
-				pageSize,
-				search,
-			},
-		});
-	},
-	getBlogBySlug: (slug: string) => {
-		return http.get(`/blogs/${slug}`);
-	},
-};
-export const fetchAllHotBlogs = async () => {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
-
-	const res = await fetch("http://localhost:7022/api/v1/blogs/hot", {
-		cache: "no-store",
-	});
+export const fetchAllHotBlogs = async ({
+	pageIndex,
+	pageSize,
+	search,
+}: {
+	pageIndex: number;
+	pageSize: number;
+	search?: string;
+}) => {
+	const res = await fetch(
+		`${BASE_URL}/blogs/hot?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}`,
+		{
+			cache: "no-store",
+		}
+	);
 	const data = await res.json();
 
 	return data;
@@ -44,12 +29,10 @@ export const fetchAllBlogs = async ({
 	pageIndex: number;
 	pageSize: number;
 	search: string;
-	type: string;
+	type?: string;
 }) => {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
-
 	const res = await fetch(
-		`http://localhost:7022/api/v1/blogs?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}&type=${type}`,
+		`${BASE_URL}/blogs?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${search}&type=${type}`,
 		{
 			cache: "no-store",
 		}
@@ -59,14 +42,11 @@ export const fetchAllBlogs = async ({
 	return data;
 };
 
-export const fetchBlogBySlug = async (slug) => {
-	await new Promise((resolve) => setTimeout(resolve, 1000));
-
-	const res = await fetch(`http://localhost:7022/api/v1/blogs/${slug}`, {
+export const fetchBlogBySlug = async (slug: string) => {
+	const res = await fetch(`${BASE_URL}/blogs/${slug}`, {
 		cache: "no-store",
 	});
 	const data = await res.json();
 
 	return data;
 };
-export default blogApi;

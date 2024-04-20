@@ -1,16 +1,13 @@
-import Image from "next/image";
 import React from "react";
 
-type Props = {};
-
-const ACardImage = (props: Props) => {
+const ACardImage = () => {
 	return (
 		<div className="bg-blue00">
 			<div className="py-10">
 				<div className="container mx-auto">
 					<div className="flex justify-between items-start">
 						<div className="flex flex-col items-center gap-7">
-							<div className="img_card_ab_1 lg:w-[525.85px] lg:h-[448.224px]"></div>
+							<div className="img_card_ab_1  lg:w-[400px] lg:h-[400px]"></div>
 							<div className="flex items-start gap-[7.318px]">
 								<div className="img_ms_ab flex justify-center items-center lg:w-[369px] lg:h-[195px]">
 									<p className="text_in_card_mission lg:w-[255px] lg:text-8">
@@ -20,7 +17,7 @@ const ACardImage = (props: Props) => {
 							</div>
 						</div>
 						<div className="flex flex-col items-center gap-7">
-							<div className="img_card_ab_2  lg:w-[525.85px] lg:h-[448.224px]"></div>
+							<div className="img_card_ab_2  lg:w-[400px] lg:h-[400px]"></div>
 							<div className="flex items-start gap-[7.318px]">
 								<div className="img_ms_ab flex justify-center items-center lg:w-[369px] lg:h-[195px]">
 									<p className="text_in_card_mission lg:w-[255px] lg:text-8">
@@ -30,7 +27,7 @@ const ACardImage = (props: Props) => {
 							</div>
 						</div>
 						<div className="flex flex-col items-center gap-7">
-							<div className="img_card_ab_3  lg:w-[525.85px] lg:h-[448.224px]"></div>
+							<div className="img_card_ab_3  lg:w-[400px] lg:h-[400px]"></div>
 							<div className="flex items-start gap-[7.318px]">
 								<div className="img_ms_ab flex justify-center items-center lg:w-[369px] lg:h-[195px]">
 									<p className="text_in_card_mission lg:w-[255px] lg:text-8">

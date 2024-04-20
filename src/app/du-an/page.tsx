@@ -1,10 +1,27 @@
-import Heading from "@/components/heading/Heading";
-import ListPartner from "./components/ListPartner";
-import ListCard from "../../components/card/ListCard";
-import HotProject from "./components/HotProject";
-
-import {fetchAllProjects, fetchHotProjects} from "@/apis/project.api";
+const Heading = dynamic(() => import("@/components/heading/Heading"));
+const ListPartner = dynamic(() => import("./components/ListPartner"));
 import {HydrationBoundary, QueryClient, dehydrate} from "@tanstack/react-query";
+import useProjectsQuery from "@/hooks/useProjectsQuery";
+import useHotProjectsQuery from "@/hooks/useHotProjectsQuery";
+const HotProject = dynamic(() => import("./components/HotProject"));
+const ListProject = dynamic(() => import("./components/ListProject"));
+import dynamic from "next/dynamic";
+import {Metadata} from "next";
+import {getMetaData} from "@/utils";
+import {pathData} from "@/constants";
+import {fetchSeoByLink} from "@/apis/seo.api";
+export async function generateMetadata(): Promise<Metadata> {
+	const data = await fetchSeoByLink({
+		link: pathData.contact,
+	});
+
+	const result = getMetaData(data);
+	return {
+		title: result?.title || "Dự án",
+		description: result?.description,
+	};
+}
+
 const Project = async ({
 	searchParams,
 }: {
@@ -14,28 +31,24 @@ const Project = async ({
 		search: string;
 	};
 }) => {
-	const pageIndex = searchParams?.pageIndex || 1;
-	const pageSize = searchParams?.pageSize || 10;
+	const pageIndex = Number(searchParams?.pageIndex) || 1;
+	const pageSize = Number(searchParams?.pageSize) || 10;
 	const search = searchParams?.search || "";
 	const queryClient = new QueryClient();
-	await queryClient.prefetchQuery({
-		queryKey: ["hot-projects"],
-		queryFn: () =>
-			fetchHotProjects({
-				pageIndex: 1,
-				pageSize: 10,
-				search: "",
-			}),
-	});
-	await queryClient.prefetchQuery({
-		queryKey: ["seo-projects", pageIndex, pageSize, search],
-		queryFn: () =>
-			fetchAllProjects({
-				pageIndex: pageIndex,
-				pageSize: pageSize,
-				search: search,
-			}),
-	});
+	await queryClient.prefetchQuery(
+		useHotProjectsQuery({
+			pageIndex: 1,
+			pageSize: 10,
+			search: "",
+		})
+	);
+	await queryClient.prefetchQuery(
+		useProjectsQuery({
+			pageIndex,
+			pageSize,
+			search,
+		})
+	);
 	return (
 		<div className="">
 			<HydrationBoundary state={dehydrate(queryClient)}>
@@ -47,9 +60,9 @@ const Project = async ({
 					<div className="lg:my-[60px] my-4 lg:px-[100px]  w-full ">
 						<ListPartner />
 					</div>
+
 					<HydrationBoundary state={dehydrate(queryClient)}>
-						<ListCard
-							kind="project"
+						<ListProject
 							pageIndex={pageIndex}
 							pageSize={pageSize}
 							search={search}

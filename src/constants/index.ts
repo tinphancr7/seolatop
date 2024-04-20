@@ -194,6 +194,16 @@ const listContacts = [
 	},
 ];
 const URL_IMAGE = "http://103.186.24.231:9000/newkaizen";
+const BASE_URL = "http://localhost:7022/api/v1";
+
+const pathData = {
+	home: "/",
+	about: "/gioi-thieu",
+	blog: "/blog",
+	activity: "/hoat-dong",
+	project: "/du-an",
+	contact: "/lien-he",
+};
 export {
 	listMenuHeader,
 	rankLogo,
@@ -203,4 +213,6 @@ export {
 	listMenuBlog,
 	listContacts,
 	listPartnersMobile,
+	BASE_URL,
+	pathData,
 };

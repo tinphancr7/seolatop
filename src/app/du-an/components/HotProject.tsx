@@ -1,22 +1,25 @@
 "use client";
-import {fetchHotProjects} from "@/apis/project.api";
-import Heading from "@/components/heading/Heading";
+const BgImg = dynamic(() => import("@/components/bg/BgImg"));
+const Heading = dynamic(() => import("@/components/heading/Heading"));
+
 import SwiperCard from "@/components/swiper-card/SwiperCard";
+import useHotProjectsQuery from "@/hooks/useHotProjectsQuery";
 import {useQuery} from "@tanstack/react-query";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, {useState} from "react";
 
 const HotProject = () => {
-	const {data} = useQuery({
-		queryKey: ["hot-projects"],
-		queryFn: () =>
-			fetchHotProjects({
-				pageIndex: 1,
-				pageSize: 10,
-				search: "",
-			}),
-	});
+	const {data} = useQuery(
+		useHotProjectsQuery({
+			pageIndex: 1,
+			pageSize: 10,
+			search: "",
+		})
+	);
+
 	const hotProjectsData = data?.result?.result;
+
 	const [chosenItem, setChosenItem] = useState(null);
 
 	const handleChosenItem = (item: any) => {
@@ -24,7 +27,8 @@ const HotProject = () => {
 	};
 	return (
 		<>
-			<div className="relative show_bg_2">
+			<div className="relative ">
+				<BgImg />
 				<Heading>CÁC DỰ ÁN NỔI BẬT</Heading>
 				<SwiperCard items={hotProjectsData} onChosenItem={handleChosenItem} />
 				<div className="flex justify-center flex-col items-center relative z-10 max-w-[1230px] w-full mx-auto ">

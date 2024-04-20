@@ -1,54 +1,51 @@
 "use client";
-import { useDebounce } from "@/hooks/useDebounce";
-import { Input } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 
-import React, { useCallback, useEffect, useState, useRef } from "react";
-import { IoSearchSharp } from "react-icons/io5";
+import {useDebounce} from "@/hooks/useDebounce";
+import {Input} from "@nextui-org/react";
+import {useRouter} from "next/navigation";
 
-const InputSearch = ({ kind, type, search }: any) => {
-  const router = useRouter();
-  const initialRender = useRef(true);
+import React, {useCallback, useEffect, useState} from "react";
+import {IoSearchSharp} from "react-icons/io5";
 
-  const [text, setText] = useState(search);
-  const searchMatch = useDebounce(text, 500);
+const InputSearch = ({kind, search, type}: any) => {
+	const router = useRouter();
+	const [text, setText] = useState(search);
 
-  const onClear = useCallback(() => {
-    setText("");
-  }, []);
-  useEffect(() => {
-    // let link =
-    //   kind === "blog"
-    //     ? `/${kind}?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${searchMatch}&type=${type}`
-    //     : `/${kind}?pageIndex=${pageIndex}&pageSize=${pageSize}&search=${searchMatch}`;
-    if (initialRender.current) {
-      initialRender.current = false;
-      return;
-    } else {
-      if (!searchMatch) {
-        router.push(`/${kind}-1`);
-      } else {
-        router.push(`/${kind}?search=${searchMatch}`);
-      }
-    }
-  }, [kind, router, searchMatch]);
-  return (
-    <Input
-      isClearable
-      className="w-full max-w-[600px]"
-      variant="bordered"
-      radius="lg"
-      classNames={{
-        inputWrapper: "rounded-full text-white focus:border-white",
-        input: "focus:border-white",
-      }}
-      placeholder="Search by name..."
-      startContent={<IoSearchSharp size={24} />}
-      value={text}
-      onClear={() => onClear()}
-      onValueChange={(value) => setText(value)}
-    />
-  );
+	const query = useDebounce(text, 500);
+
+	const [initialRender, setInitialRender] = useState(true);
+	const onClear = useCallback(() => {
+		setText("");
+	}, []);
+
+	useEffect(() => {
+		if (initialRender) {
+			setInitialRender(false);
+		} else {
+			if (!query) {
+				router.push(`/${kind}${type ? `?type=${type}` : ""}`);
+			} else {
+				router.push(`/${kind}?search=${query}${type ? `&type=${type}` : ""} `);
+			}
+		}
+	}, [kind, query, router]);
+	return (
+		<Input
+			isClearable
+			className="w-full max-w-[600px]"
+			variant="bordered"
+			radius="lg"
+			classNames={{
+				inputWrapper: "rounded-full text-white focus:border-white",
+				input: "focus:border-white",
+			}}
+			placeholder="Search by name..."
+			startContent={<IoSearchSharp size={24} />}
+			value={text}
+			onClear={() => onClear()}
+			onValueChange={(value) => setText(value)}
+		/>
+	);
 };
 
 export default InputSearch;

@@ -2,9 +2,8 @@ import {listPartners} from "@/constants";
 import Image from "next/image";
 
 const ListPartner = () => {
-	console.log("ListPartner", listPartners);
 	return (
-		<div className="grid grid-cols-12 gap-3 ">
+		<div className="grid grid-cols-12 gap-5 ">
 			{listPartners.map((item, index) => (
 				<div key={index} className="col-span-4 lg:col-span-2 ">
 					<div className="w-full h-[42px] lg:h-[96px] relative">

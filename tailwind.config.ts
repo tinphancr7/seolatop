@@ -10,6 +10,15 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
+			animation: {
+				"custom-fade-in": "fadeIn 0.8s ease-in-out",
+			},
+			keyframes: {
+				fadeIn: {
+					"0%": {opacity: "0", transform: "scale(0.6)"},
+					"100%": {opacity: "1", transform: "scale(1)"},
+				},
+			},
 			grayscale: {
 				50: "50%",
 			},
@@ -17,6 +26,8 @@ const config: Config = {
 				"gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
 				"gradient-conic":
 					"conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+				"custom-gradient":
+					"linear-gradient(1deg, rgba(38, 171, 227, 0) -0.3%, rgba(38, 171, 227, 0.5) 49.45%, rgba(45, 57, 143, 0) 99.54%, rgba(38, 171, 227, 0) 99.54%)",
 			},
 			colors: {
 				blue09: "#090c1d",

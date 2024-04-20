@@ -68,7 +68,7 @@ const BlogDetail = ({slug}) => {
 						/>
 					</div>
 				</div>
-				<div className="lg:flex items-center justify-center mt-10 hidden">
+				<div className="lg:flex items-center justify-center py-10 hidden">
 					<Link href={"/blog"} className="relative w-[560px]  h-[87px]">
 						<Image
 							src={"/images/layer.png"}

@@ -1,13 +1,13 @@
-import Card from "@/components/card/Card";
-import Heading from "@/components/heading/Heading";
-import React from "react";
+import dynamic from "next/dynamic";
+
+import RankItem from "../rank/RankItem";
 
 const Hero = () => {
 	return (
 		<div className="px-4 lg:px-0">
 			<div className=" w-full hidden lg:flex items-center gap-20">
 				<div className="w-[123px] lg:w-[312px] flex-shrink-0 ">
-					<Card name="seo" dataOrder={199} orderActive={200} />
+					<RankItem name="seo" dataOrder={199} orderActive={200} />
 				</div>
 				<div>
 					<h3 className="text-xl lg:text-3xl font-bold text-white lg:pb-4">
@@ -34,7 +34,7 @@ const Hero = () => {
 
 			<div className="text-base lg:text-2xl  text-white lg:hidden ">
 				<div className="w-[123px] lg:w-[312px] flex-shrink-0 float-left  mr-5">
-					<Card name="seo" dataOrder={199} orderActive={200} />
+					<RankItem name="seo" dataOrder={199} orderActive={200} />
 				</div>
 				<h3 className="text-lg lg:text-3xl font-bold text-white lg:pb-4">
 					QUẢN LÝ BỘ PHẬN S.E.O

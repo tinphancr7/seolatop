@@ -12,7 +12,7 @@ import "swiper/css/pagination";
 import {EffectCoverflow, Pagination} from "swiper/modules";
 import Image from "next/image";
 import {URL_IMAGE} from "@/constants";
-const SwiperCardDetail = ({images}) => {
+const SwiperCardDetail = ({images}: {images: string[]}) => {
 	const sliderRef = useRef<any>(null);
 	const handlePrev = useCallback(() => {
 		if (!sliderRef.current) return;
@@ -66,34 +66,39 @@ const SwiperCardDetail = ({images}) => {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<div
-					className="absolute left-10 top-[50%] -translate-y-[50%] cursor-pointer"
-					onClick={handlePrev}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="28"
-						height="56"
-						viewBox="0 0 28 56"
-						fill="none"
-					>
-						<path d="M0 28L28 0L14 28L28 56L0 28Z" fill="#32DFC0" />
-					</svg>
-				</div>
-				<div
-					className="absolute right-10 top-[50%] -translate-y-[50%] cursor-pointer"
-					onClick={handleNext}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="28"
-						height="56"
-						viewBox="0 0 28 56"
-						fill="none"
-					>
-						<path d="M28 28L0 0L14 28L0 56L28 28Z" fill="#32DFC0" />
-					</svg>
-				</div>
+
+				{images?.length > 1 && (
+					<>
+						<div
+							className="absolute left-10 top-[50%] -translate-y-[50%] cursor-pointer"
+							onClick={handlePrev}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="28"
+								height="56"
+								viewBox="0 0 28 56"
+								fill="none"
+							>
+								<path d="M0 28L28 0L14 28L28 56L0 28Z" fill="#32DFC0" />
+							</svg>
+						</div>
+						<div
+							className="absolute right-10 top-[50%] -translate-y-[50%] cursor-pointer"
+							onClick={handleNext}
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="28"
+								height="56"
+								viewBox="0 0 28 56"
+								fill="none"
+							>
+								<path d="M28 28L0 0L14 28L0 56L28 28Z" fill="#32DFC0" />
+							</svg>
+						</div>
+					</>
+				)}
 			</div>
 		</div>
 	);

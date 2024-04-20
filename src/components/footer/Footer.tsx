@@ -6,7 +6,7 @@ import {MdOutlineEmail} from "react-icons/md";
 import {RiArrowRightSLine} from "react-icons/ri";
 const Footer = () => {
 	return (
-		<div className="bg-blue00 pt-10 relative !z-[99999999]">
+		<div className="bg-blue00  relative !z-[99999999]">
 			<div className="bg-blue19 w-full pt-2 pb-14 lg:py-8 flex items-center justify-center ">
 				<div className="grid grid-cols-12 lg:gap-10 container lg:max-w-screen-xl ">
 					<div className="col-span-12 lg:col-span-3 flex items-center justify-center">
