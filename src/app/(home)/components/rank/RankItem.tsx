@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const rankLogo: RankLogo = {
 	highlight: {
-		name: "highlight",
+		// name: "highlight",
 		url: "highlight.png",
 		width: "182px",
 		height: "206px",
